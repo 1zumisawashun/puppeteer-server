@@ -7,7 +7,6 @@ const cors = require("cors");
 
 app.use(bodyParser.json());
 app.use(cors());
-console.log(router, "routerの中身を見ます。");
 const yodobashicameraAutomemo = [];
 const biccameraAutomemo = [];
 const yamadadenkiAutomemo = [];
@@ -19,9 +18,10 @@ const kakakucomAutomemo = [];
 const rakutenAutomemo = [];
 const paypayAutomemo = [];
 
+console.log(router, "作り立てのrouter");
 //-------------------------------------------------------------------------------
 
-(async () => {
+async () => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -53,7 +53,7 @@ const paypayAutomemo = [];
     yodobashicameraAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
+};
 
 router.get("/api/yodobashicamera/Automemo", cors(), function (req, res, next) {
   res.json(yodobashicameraAutomemo);
@@ -358,5 +358,8 @@ router.get("/api/paypay/Automemo", cors(), function (req, res, next) {
 });
 
 //-------------------------------------------------------------------------------
+console.log("=======================");
+console.log(router, "export直前のrouter");
+console.log(router.stack, "export直前のrouter");
 
 module.exports = router;
