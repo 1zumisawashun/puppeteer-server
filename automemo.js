@@ -18,7 +18,6 @@ const kakakucomAutomemo = [];
 const rakutenAutomemo = [];
 const paypayAutomemo = [];
 
-console.log(router, "作り立てのrouter");
 //-------------------------------------------------------------------------------
 
 async () => {
@@ -358,8 +357,4 @@ router.get("/api/paypay/Automemo", cors(), function (req, res, next) {
 });
 
 //-------------------------------------------------------------------------------
-console.log("=======================");
-console.log(router, "export直前のrouter");
-console.log(router.stack, "export直前のrouter");
-
 module.exports = router;
