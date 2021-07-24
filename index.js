@@ -2,20 +2,25 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const automemo = require("./automemo");
+//const automemo = require("./automemo");
 //const meetingowl = require("./meetingowl");
 const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 //register view engine
 app.set("view engine", "ejs");
 
-app.use("/", automemo);
+//app.use("/", automemo);
 //app.use("/", meetingowl);
 app.use(bodyParser.json());
+//for auth json pause
+app.use(express.json());
+
 app.use(cors());
 //add scoped
 app.use("/blogs", blogRoutes);
+app.use(authRoutes);
 //use middleware
 app.use(morgan("dev"));
 app.use(express.static("public"));
