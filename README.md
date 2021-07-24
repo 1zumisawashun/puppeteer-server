@@ -1,6 +1,10 @@
 # puppeteer-backend
 
-express,puppeteer-core,firestore を使用しています。
+サーバー：express
+セキュリティ：jwt・cookie-parser・bcrypt・express-validator
+スクレイピング：puppeteer-core
+データベース：firestore
+フロント：ejs
 
 ## Project setup
 

@@ -5,7 +5,6 @@ const { check, validationResult } = require("express-validator");
 const firebase = require("../plugins/firebase");
 const db = firebase.firestore();
 const bcrypt = require("bcrypt");
-const { BrowserContextEmittedEvents } = require("puppeteer-core");
 
 router.get("/login", authController.login_get);
 router.post("/login", authController.login_post);
