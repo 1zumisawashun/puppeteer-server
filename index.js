@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 
 //register view engine
 app.set("view engine", "ejs");
@@ -16,6 +17,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 //for auth json pause
 app.use(express.json());
+//instead body-parser
+app.use(cookieParser());
 
 app.use(cors());
 //add scoped
@@ -43,4 +46,21 @@ app.get("/about", (req, res) => {
 //redirect test
 app.get("/about-us", (req, res) => {
   res.redirect("/about");
+});
+
+//set-cookies
+app.get("/set-cookies", (req, res) => {
+  res.cookie("newUser", false);
+  res.cookie("isEmployee", true, {
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+  });
+  res.send("you got a cookies");
+});
+
+//read-cookies
+app.get("/read-cookies", (req, res) => {
+  const cookies = req.cookies;
+  console.log(cookies.newUser);
+  res.json(cookies);
 });

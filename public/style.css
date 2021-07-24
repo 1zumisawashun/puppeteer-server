@@ -106,3 +106,39 @@ textarea {
   font-size: 1.2rem;
   cursor: pointer;
 }
+
+/* signup & login */
+
+.login-form h2 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+.login-form {
+  width: 360px;
+  margin: 10% auto;
+  padding: 30px;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: white;
+}
+.login-input {
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-label {
+  display: block;
+  margin: 20px 0 10px;
+}
+.login-button {
+  margin: 30px 0;
+  border-radius: 36px;
+  background: #fee996;
+  border: 0;
+  padding: 10px;
+}

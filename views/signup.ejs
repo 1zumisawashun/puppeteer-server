@@ -2,8 +2,29 @@
 <html lang="ja">
   <%- include("./partials/head.ejs") %>
   <body>
-    <%- include("./partials/nav.ejs") %>
-    <p>signup</p>
+    <form class="login-form">
+      <h2>Sign up</h2>
+      <label for="email" class="login-label">Email</label>
+      <input type="text" name="email" required class="login-input" />
+      <div class="email error"></div>
+      <label for="password" class="login-label">Password</label>
+      <input type="password" name="password" required class="login-input" />
+      <div class="password error"></div>
+      <button class="login-button">Sign up</button>
+    </form>
+
+    <script>
+      const form = document.querySelector(".login-form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //get the value
+        const email = form.email.value;
+        const password = form.password.value;
+        //bacause input names are email and password
+        console.log(email, password);
+      });
+    </script>
+
     <%- include("./partials/footer.ejs") %>
   </body>
 </html>
