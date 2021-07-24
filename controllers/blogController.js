@@ -10,6 +10,8 @@ const blog_index = (req, res) => {
         blogs.push({ id: doc.id, ...doc.data() });
       });
       res.render("index", { title: "All Blogs", blogs: blogs });
+      //res.json(blogs);
+      // jsonで画面描画される
     })
     .catch((error) => {
       console.log(error);

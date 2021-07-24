@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <% if (kakakucomAutomemo.length > 0){ %> <% kakakucomAutomemo.forEach(kakakucom=>{ %>
+      <p><%=kakakucom.price%></p>
+      <p><%=kakakucom.company%></p>
+      <% })%> <%}%>
+    </div>
+    <%- include("./partials/footer.ejs") %>
+  </body>
+</html>

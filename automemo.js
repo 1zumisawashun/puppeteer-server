@@ -53,8 +53,7 @@ async () => {
   }
   await browser.close();
 };
-
-router.get("/api/yodobashicamera/Automemo", cors(), function (req, res, next) {
+router.get("/yodobashicamera", cors(), function (req, res, next) {
   res.json(yodobashicameraAutomemo);
 });
 
@@ -97,7 +96,7 @@ router.get("/api/yodobashicamera/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/biccamera/Automemo", cors(), function (req, res, next) {
+router.get("/biccamera", cors(), function (req, res, next) {
   res.json(biccameraAutomemo);
 });
 
@@ -140,7 +139,7 @@ router.get("/api/biccamera/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/yamadadenki/Automemo", cors(), function (req, res, next) {
+router.get("/yamadadenki", cors(), function (req, res, next) {
   res.json(yamadadenkiAutomemo);
 });
 
@@ -183,7 +182,7 @@ router.get("/api/yamadadenki/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/nojima/Automemo", cors(), function (req, res, next) {
+router.get("/nojima", cors(), function (req, res, next) {
   res.json(nojimaAutomemo);
 });
 
@@ -223,7 +222,7 @@ router.get("/api/nojima/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/edion/Automemo", cors(), function (req, res, next) {
+router.get("/edion", cors(), function (req, res, next) {
   res.json(edionAutomemo);
 });
 
@@ -266,7 +265,13 @@ router.get("/api/edion/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/kakakucom/Automemo", cors(), function (req, res, next) {
+router.get("/kakakucom", (req, res) => {
+  res.render("kakakucom", {
+    title: "kakakucom",
+    kakakucomAutomemo: kakakucomAutomemo,
+  });
+});
+router.get("/api/automemo/kakakucom", cors(), function (req, res) {
   res.json(kakakucomAutomemo);
 });
 
@@ -309,7 +314,7 @@ router.get("/api/kakakucom/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/rakuten/Automemo", cors(), function (req, res, next) {
+router.get("/rakuten", cors(), function (req, res, next) {
   res.json(rakutenAutomemo);
 });
 
@@ -352,7 +357,7 @@ router.get("/api/rakuten/Automemo", cors(), function (req, res, next) {
   await browser.close();
 })();
 
-router.get("/api/paypay/Automemo", cors(), function (req, res, next) {
+router.get("/paypay", cors(), function (req, res, next) {
   res.json(paypayAutomemo);
 });
 
