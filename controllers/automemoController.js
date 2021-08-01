@@ -1,30 +1,23 @@
-const express = require("express");
-const router = express.Router();
 const puppeteer = require("puppeteer-core");
-const app = express();
-const bodyParser = require("body-parser");
-const cors = require("cors");
 
-app.use(bodyParser.json());
-app.use(cors());
 const yodobashicameraAutomemo = [];
 const biccameraAutomemo = [];
 const yamadadenkiAutomemo = [];
 const nojimaAutomemo = [];
 const edionAutomemo = [];
-const joshinAutomemo = [];
-const ksAutomemo = [];
+//const joshinAutomemo = [];
+//const ksAutomemo = [];
 const kakakucomAutomemo = [];
 const rakutenAutomemo = [];
 const paypayAutomemo = [];
 
 //-------------------------------------------------------------------------------
 
-async () => {
+const yodobashi = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000 /* 各操作の前に入れる遅延(ms)を設定 */,
+    slowMo: 1000 /* 各操作の前に入れる遅延(ms)を設定 */,
     headless: false,
   });
   const page = await browser.newPage();
@@ -52,18 +45,16 @@ async () => {
     yodobashicameraAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
+  await res.json(yodobashicameraAutomemo);
 };
-router.get("/yodobashicamera", cors(), function (req, res, next) {
-  res.json(yodobashicameraAutomemo);
-});
 
 //-------------------------------------------------------------------------------
 
-(async () => {
+const bic = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -94,19 +85,15 @@ router.get("/yodobashicamera", cors(), function (req, res, next) {
     biccameraAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-
-router.get("/biccamera", cors(), function (req, res, next) {
-  res.json(biccameraAutomemo);
-});
+  await res.json(biccameraAutomemo);
+};
 
 //-------------------------------------------------------------------------------
-
-(async () => {
+const yamada = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -137,19 +124,15 @@ router.get("/biccamera", cors(), function (req, res, next) {
     yamadadenkiAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-
-router.get("/yamadadenki", cors(), function (req, res, next) {
-  res.json(yamadadenkiAutomemo);
-});
-
+  await res.json(yamadadenkiAutomemo);
+};
 //-------------------------------------------------------------------------------
 
-(async () => {
+const nojima = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -180,19 +163,15 @@ router.get("/yamadadenki", cors(), function (req, res, next) {
     nojimaAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-
-router.get("/nojima", cors(), function (req, res, next) {
-  res.json(nojimaAutomemo);
-});
+  await res.json(nojimaAutomemo);
+};
 
 //-------------------------------------------------------------------------------
-
-(async () => {
+const edion = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -220,19 +199,14 @@ router.get("/nojima", cors(), function (req, res, next) {
     edionAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-
-router.get("/edion", cors(), function (req, res, next) {
-  res.json(edionAutomemo);
-});
-
+  await res.json(edionAutomemo);
+};
 //-------------------------------------------------------------------------------
-
-(async () => {
+const kakakucom = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -263,24 +237,16 @@ router.get("/edion", cors(), function (req, res, next) {
     kakakucomAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-// router.get("/kakakucom", (req, res) => {
-//   res.render("kakakucom", {
-//     title: "kakakucom",
-//     kakakucomAutomemo: kakakucomAutomemo,
-//   });
-// });
-router.get("/api/automemo/kakakucom", cors(), function (req, res) {
-  res.json(kakakucomAutomemo);
-});
+  await res.json(kakakucomAutomemo);
+};
 
 //-------------------------------------------------------------------------------
 
-(async () => {
+const rakuten = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -311,19 +277,15 @@ router.get("/api/automemo/kakakucom", cors(), function (req, res) {
     rakutenAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
-
-router.get("/rakuten", cors(), function (req, res, next) {
-  res.json(rakutenAutomemo);
-});
-
+  await res.json(rakutenAutomemo);
+};
 //-------------------------------------------------------------------------------
 
-(async () => {
+const paypay = async (req, res) => {
   const browser = await puppeteer.launch({
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    slowMo: 2000,
+    slowMo: 1000,
     headless: false,
   });
   const page = await browser.newPage();
@@ -354,11 +316,16 @@ router.get("/rakuten", cors(), function (req, res, next) {
     paypayAutomemo.push(Object.assign(postNames[i], postPrices[i]));
   }
   await browser.close();
-})();
+  await res.json(paypayAutomemo);
+};
 
-router.get("/paypay", cors(), function (req, res, next) {
-  res.json(paypayAutomemo);
-});
-
-//-------------------------------------------------------------------------------
-module.exports = router;
+module.exports = {
+  yodobashi,
+  bic,
+  yamada,
+  nojima,
+  edion,
+  kakakucom,
+  rakuten,
+  paypay,
+};

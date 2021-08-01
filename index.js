@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
 const authRoutes = require("./routes/authRoutes");
+const automemoRoutes = require("./routes/automemoRoutes");
 const cookieParser = require("cookie-parser");
 const { requestAuth, checkUser } = require("./middleware/authMiddleware");
 
@@ -25,6 +26,7 @@ app.use(cors());
 //add scoped
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
+app.use("/api/automemo", automemoRoutes);
 //use middleware
 app.use(morgan("dev"));
 app.use(express.static("public"));
