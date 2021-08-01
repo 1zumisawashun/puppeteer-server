@@ -8,6 +8,7 @@ const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
+const { requestAuth, checkUser } = require("./middleware/authMiddleware");
 
 //register view engine
 app.set("view engine", "ejs");
@@ -34,8 +35,12 @@ var server = app.listen(3000, function () {
   console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
+app.get("*", checkUser);
+//use all of get request
+
 //listen for request
-app.get("/", (req, res) => {
+app.get("/", requestAuth, (req, res) => {
+  //if access root directori and user does not have jwt, redirect to login page
   res.redirect("/blogs");
 });
 
