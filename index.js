@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-//const automemo = require("./automemo");
-//const meetingowl = require("./meetingowl");
 const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -11,26 +9,19 @@ const automemoRoutes = require("./routes/automemoRoutes");
 const cookieParser = require("cookie-parser");
 const { requestAuth, checkUser } = require("./middleware/authMiddleware");
 
-//register view engine
 app.set("view engine", "ejs");
 
-//app.use("/", automemo);
-//app.use("/", meetingowl);
 app.use(bodyParser.json());
-//for auth json pause
 app.use(express.json());
-//instead body-parser
 app.use(cookieParser());
-
 app.use(cors());
-//add scoped
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
 // app.use("/api/automemo", automemoRoutes);
-//use middleware
-app.use(morgan("dev"));
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
 
 /* 2. listen()メソッドを実行して3000番ポートで待ち受け。*/
 var server = app.listen(3000, function () {
@@ -40,19 +31,13 @@ var server = app.listen(3000, function () {
 app.get("*", checkUser);
 //use all of get request
 
-//listen for request
 app.get("/", requestAuth, (req, res) => {
-  //if access root directori and user does not have jwt, redirect to login page
+  //if access root directory and user does not have jwt, redirect to login page
   res.redirect("/blogs");
 });
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
-});
-
-//redirect test
-app.get("/about-us", (req, res) => {
-  res.redirect("/about");
 });
 
 //set-cookies
