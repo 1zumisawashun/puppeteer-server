@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
 const authRoutes = require("./routes/authRoutes");
 const automemoRoutes = require("./routes/automemoRoutes");
+const meetingowlRoutes = require("./routes/meetingowlRoutes");
 const cookieParser = require("cookie-parser");
 const { requestAuth, checkUser } = require("./middleware/authMiddleware");
 
@@ -22,6 +23,7 @@ app.use(morgan("dev"));
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
 app.use("/api/automemo", automemoRoutes);
+app.use("/api/meetingowl", meetingowlRoutes);
 
 /* 2. listen()メソッドを実行して3000番ポートで待ち受け。*/
 var server = app.listen(3000, function () {
