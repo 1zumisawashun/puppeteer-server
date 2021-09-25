@@ -25,16 +25,13 @@ app.use(authRoutes);
 app.use("/api/automemo", automemoRoutes);
 app.use("/api/meetingowl", meetingowlRoutes);
 
-/* 2. listen()メソッドを実行して3000番ポートで待ち受け。*/
 var server = app.listen(3000, function () {
   console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
 app.get("*", checkUser);
-//use all of get request
 
 app.get("/", requestAuth, (req, res) => {
-  //if access root directory and user does not have jwt, redirect to login page
   res.redirect("/blogs");
 });
 

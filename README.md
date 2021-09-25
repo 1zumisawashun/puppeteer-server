@@ -1,9 +1,9 @@
 # puppeteer-backend
 
-サーバー：express
-セキュリティ：jwt・cookie-parser・bcrypt・express-validator
-スクレイピング：puppeteer-core
-データベース：firestore
+サーバー：express  
+セキュリティ：jwt・cookie-parser・bcrypt・express-validator  
+スクレイピング：puppeteer-core  
+データベース：firestore  
 フロント：ejs
 
 ## Project setup
