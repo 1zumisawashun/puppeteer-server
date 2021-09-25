@@ -26,7 +26,7 @@ app.use(cors());
 //add scoped
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
-app.use("/api/automemo", automemoRoutes);
+// app.use("/api/automemo", automemoRoutes);
 //use middleware
 app.use(morgan("dev"));
 app.use(express.static("public"));
