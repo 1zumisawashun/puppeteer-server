@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
-// app.use("/api/automemo", automemoRoutes);
+app.use("/api/automemo", automemoRoutes);
 
 /* 2. listen()メソッドを実行して3000番ポートで待ち受け。*/
 var server = app.listen(3000, function () {
