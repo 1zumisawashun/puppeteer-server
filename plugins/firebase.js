@@ -1,15 +1,15 @@
-//import firebase from "firebase";
 const firebase = require("firebase");
+require("dotenv").config();
+
 if (!firebase.apps.length) {
   firebase.initializeApp({
-    apiKey: "AIzaSyDsn2RJvn0-QvFaXRAIMFfbgADRhe0f3G4",
-    authDomain: "puppeteer-466fa.firebaseapp.com",
-    projectId: "puppeteer-466fa",
-    storageBucket: "puppeteer-466fa.appspot.com",
-    messagingSenderId: "691021288509",
-    appId: "1:691021288509:web:140e5c4dd58d33eee14654",
-    measurementId: "G-PKHLZSS5KY",
+    apiKey: process.env.FIREBASE_APIKEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   });
 }
-//export default firebase;
 module.exports = firebase;
