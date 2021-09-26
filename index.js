@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-const blogRoutes = require("./routes/blogRoutes");
+const listRoutes = require("./routes/listRoutes");
 const authRoutes = require("./routes/authRoutes");
 const automemoRoutes = require("./routes/automemoRoutes");
 const meetingowlRoutes = require("./routes/meetingowlRoutes");
@@ -20,7 +20,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-app.use("/blogs", blogRoutes);
+app.use("/lists", listRoutes);
 app.use(authRoutes);
 app.use("/api/automemo", automemoRoutes);
 app.use("/api/meetingowl", meetingowlRoutes);
@@ -32,7 +32,7 @@ var server = app.listen(3000, function () {
 app.get("*", checkUser);
 
 app.get("/", requestAuth, (req, res) => {
-  res.redirect("/blogs");
+  res.redirect("/lists");
 });
 
 app.get("/about", (req, res) => {

@@ -5,17 +5,20 @@
     <%- include("./partials/nav.ejs") %>
 
     <div class="details content">
-      <h2><%= blog.title%></h2>
+      <h2><%= list.product_name%></h2>
       <div class="content">
-        <p><%= blog.body%></p>
+        <p><%= list.shop_name_path%></p>
+        <p><%= list.product_price_path%></p>
+        <p><%= list.url%></p>
+        <p><%= list.remark%></p>
       </div>
-      <a class="delete" data-doc="<%= blog.id%>">delete</a>
+      <a class="delete" data-doc="<%= list.id%>">delete</a>
     </div>
     <%- include("./partials/footer.ejs") %>
     <script>
       const trashcan = document.querySelector("a.delete");
       trashcan.addEventListener("click", (e) => {
-        const endpoint = `/blogs/${trashcan.dataset.doc}`;
+        const endpoint = `/lists/${trashcan.dataset.doc}`;
         fetch(endpoint, {
           method: "DELETE",
         })

@@ -5,12 +5,14 @@
     <%- include("./partials/nav.ejs") %>
 
     <div class="blogs content">
-      <h2>All Scrapings</h2>
-      <% if (blogs.length > 0){ %> <% blogs.forEach(blog=>{ %>
-      <a class="single" href="/blogs/<%= blog.id %>">
-        <h3 class="title"><%= blog.title%></h3>
-        <p class="snippet"><%= blog.snippet%></p>
-        <p class="snippet"><%= blog.id%></p>
+      <h2>Scraping Lists</h2>
+      <% if (lists.length > 0){ %> <% lists.forEach(list=>{ %>
+      <a class="single" href="/lists/<%= list.id %>">
+        <h3 class="title"><%= list.product_name%></h3>
+        <p class="snippet"><%= list.shop_name_path%></p>
+        <p class="snippet"><%= list.product_price_path%></p>
+        <p class="snippet"><%= list.url%></p>
+        <p class="snippet"><%= list.remark%></p>
       </a>
       <% })%> <%}%>
     </div>
