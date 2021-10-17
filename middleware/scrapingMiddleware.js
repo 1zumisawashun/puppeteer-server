@@ -17,7 +17,7 @@ const scraping = async (shop) => {
   // scraping
   const priceSelector = await page.$$(shop.pricePath);
   const nameSelector = await page.$$(shop.namePath);
-  const resultHash = [];
+  const resultArray = [];
 
   for (let i = 0; i < priceSelector.length; i++) {
     const data = {
@@ -28,12 +28,12 @@ const scraping = async (shop) => {
         await nameSelector[i].getProperty("textContent")
       ).jsonValue(),
     };
-    resultHash.push(data);
+    resultArray.push(data);
   }
 
   await browser.close();
-  console.log(resultHash, "check resultHash");
-  return resultHash;
+  console.log(resultArray, "check resultHash");
+  return resultArray;
 };
 
 module.exports = { scraping };

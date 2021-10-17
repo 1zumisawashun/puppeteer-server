@@ -1,7 +1,5 @@
 const admin = require("../plugins/firebase");
 const db = admin.firestore();
-// const multer = require("multer");
-// const upload = multer();
 
 const list_index = (req, res) => {
   db.collection("request")
