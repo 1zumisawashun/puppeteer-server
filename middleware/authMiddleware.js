@@ -1,9 +1,5 @@
 const jwt = require("jsonwebtoken");
-const admin = require("firebase-admin");
-const ServiceAccount = require("../ServiceAccount.json");
-if (admin.apps.length === 0) {
-  admin.initializeApp({ credential: admin.credential.cert(ServiceAccount) });
-}
+const admin = require("../plugins/firebase");
 const db = admin.firestore();
 
 const requestAuth = (req, res, next) => {

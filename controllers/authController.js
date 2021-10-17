@@ -1,11 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
-const admin = require("firebase-admin");
-const ServiceAccount = require("../ServiceAccount.json");
-if (admin.apps.length === 0) {
-  admin.initializeApp({ credential: admin.credential.cert(ServiceAccount) });
-}
+const admin = require("../plugins/firebase");
 const db = admin.firestore();
 
 //create token

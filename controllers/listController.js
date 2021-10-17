@@ -1,15 +1,5 @@
-const admin = require("firebase-admin");
-const ServiceAccount = require("../ServiceAccount.json");
-if (admin.apps.length === 0) {
-  admin.initializeApp({ credential: admin.credential.cert(ServiceAccount) });
-}
+const admin = require("../plugins/firebase");
 const db = admin.firestore();
-const docRef = db.collection("users").doc("alovelace");
-const setAda = docRef.set({
-  first: "Ada",
-  last: "Lovelace",
-  born: 1815,
-});
 // const multer = require("multer");
 // const upload = multer();
 
