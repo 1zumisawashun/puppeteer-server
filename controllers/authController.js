@@ -1,8 +1,12 @@
-const firebase = require("../plugins/firebase");
-const db = firebase.firestore();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
+const admin = require("firebase-admin");
+const ServiceAccount = require("../ServiceAccount.json");
+if (admin.apps.length === 0) {
+  admin.initializeApp({ credential: admin.credential.cert(ServiceAccount) });
+}
+const db = admin.firestore();
 
 //create token
 const maxAge = 3 * 24 * 60 * 60;

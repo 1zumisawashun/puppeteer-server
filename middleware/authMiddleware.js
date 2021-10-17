@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
-const firebase = require("../plugins/firebase");
-const db = firebase.firestore();
+const admin = require("firebase-admin");
+const ServiceAccount = require("../ServiceAccount.json");
+if (admin.apps.length === 0) {
+  admin.initializeApp({ credential: admin.credential.cert(ServiceAccount) });
+}
+const db = admin.firestore();
 
 const requestAuth = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -36,11 +40,7 @@ const checkUser = (req, res, next) => {
       } else {
         await db
           .collection("users")
-          .where(
-            firebase.firestore.FieldPath.documentId(),
-            "==",
-            decodedToken.id
-          )
+          .where(admin.firestore.FieldPath.documentId(), "==", decodedToken.id)
           .get()
           .then((docSnapshot) => {
             return (user = docSnapshot.docs[0].data());
