@@ -1,3 +1,6 @@
+const { scraping } = require("./scrapingMiddleware");
+const { yamada } = require("../model/automemo");
+
 const line = require("@line/bot-sdk");
 require("dotenv").config();
 const config = {
@@ -11,10 +14,12 @@ const handleEvent = async (event) => {
   if (event.type !== "message" || event.message.type !== "text") {
     return null;
   }
-  // 返信用メッセージを作成
+  // スクレイピングの結果を取得
+  const result = await scraping(yamada);
+  // 返信用メッセージを作成（タイプに合わせて整形しなくてはいけない）
   await client.replyMessage(event.replyToken, {
     type: "text",
-    text: event.message.text,
+    text: result[0].price,
   });
 };
 

@@ -32,7 +32,7 @@ const scraping = async (shop) => {
   }
 
   await browser.close();
-  console.log(resultArray, "check resultHash");
+  console.log(resultArray, "check resultArray");
   return resultArray;
 };
 
