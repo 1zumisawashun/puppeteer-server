@@ -9,8 +9,11 @@ const automemoRoutes = require("./routes/automemoRoutes");
 const meetingowlRoutes = require("./routes/meetingowlRoutes");
 const cookieParser = require("cookie-parser");
 const { requestAuth, checkUser } = require("./middleware/authMiddleware");
+const lineRoutes = require("./routes/lineRoutes");
 
 app.set("view engine", "ejs");
+
+app.use(lineRoutes);
 
 app.use(bodyParser.json());
 app.use(express.json());
