@@ -14,7 +14,7 @@ const lineRoutes = require("./routes/lineRoutes");
 app.set("view engine", "ejs");
 
 app.use(lineRoutes);
-
+app.use("/liff", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
