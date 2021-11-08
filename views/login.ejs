@@ -11,12 +11,19 @@
       <input type="password" name="password" required class="login-input" />
       <div class="password error"></div>
       <button class="login-button">Log in</button>
+      <button class="login-button signup-button">Sign Up</button>
     </form>
 
     <script>
       const form = document.querySelector(".login-form");
       const emailError = document.querySelector(".email.error");
       const passwordError = document.querySelector(".password.error");
+      const signup = document.querySelector(".signup-button");
+
+      signup.addEventListener("click", (e) => {
+        console.log(e, "clickイベントが発火しています。");
+        location.assign("/signup");
+      });
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
