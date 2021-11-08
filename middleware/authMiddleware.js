@@ -21,8 +21,6 @@ const requestAuth = (req, res, next) => {
   }
 };
 
-//check user
-
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   console.log(token);
@@ -45,7 +43,6 @@ const checkUser = (req, res, next) => {
             res.locals.user = user;
             next();
           });
-        // inject the middleware
       }
     });
   } else {
@@ -54,4 +51,18 @@ const checkUser = (req, res, next) => {
   }
 };
 
-module.exports = { requestAuth, checkUser };
+const getUserId = (token) => {
+  if (!token) return null;
+  console.log(token, "token on middleware");
+  return jwt.verify(token, "net ninja secret", async (err, decodedToken) => {
+    if (err) {
+      console.log(err.message);
+      return;
+    } else {
+      console.log(decodedToken.id, "decodedToken.id on middleware");
+      return decodedToken.id;
+    }
+  });
+};
+
+module.exports = { requestAuth, checkUser, getUserId };
