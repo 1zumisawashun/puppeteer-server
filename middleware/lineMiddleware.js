@@ -1,5 +1,5 @@
 const { scraping } = require("./scrapingMiddleware");
-const { yamada } = require("../model/automemo");
+const { yamada } = require("../datas/automemo");
 
 const line = require("@line/bot-sdk");
 require("dotenv").config();

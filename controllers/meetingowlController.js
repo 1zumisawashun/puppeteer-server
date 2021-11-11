@@ -8,7 +8,7 @@ const {
   kakakucom,
   rakuten,
   paypay,
-} = require("../model/meetingowl");
+} = require("../datas/meetingowl");
 
 const yodobashiApi = async (req, res) => {
   const result = await scraping(yodobashi);

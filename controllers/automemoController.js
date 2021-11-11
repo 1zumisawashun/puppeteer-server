@@ -8,7 +8,7 @@ const {
   kakakucom,
   rakuten,
   paypay,
-} = require("../model/automemo");
+} = require("../datas/automemo");
 
 const yodobashiApi = async (req, res) => {
   const result = await scraping(yodobashi);
