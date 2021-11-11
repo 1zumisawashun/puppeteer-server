@@ -41,24 +41,13 @@ const list_create_get = (req, res) => {
 const list_create_post = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = await getUserId(token);
-  console.log(userId, "userId");
-  console.log(req.file, "req.file");
-  // FIXME:timeStampが[object : object]になるstrにする必要あり
-  // FIXME:storageRefを作成し格納する
   const timeStamp = admin.firestore.FieldValue.serverTimestamp();
-  // MEMO:firebase consoleから覗いたときのパスを指定する
-  const file = bucket.file(
-    `thumbnail/${userId}/${timeStamp}/${req.file.originalname}`
-  );
-  console.log(file, "maybe file reference");
-  try {
-    // MEMO:hogeはアップロードしたいファイル
-    await file.save(req.file.buffer);
-    // MEMO:contentTypeは別でセットしないとダメ
-    await file.setMetadata({ contentType: req.file.mimetype });
-  } catch (err) {
-    console.log(err);
-  }
+  const file = bucket.file(`thumbnail/${userId}/${req.file.originalname}`);
+  await file.save(req.file.buffer);
+  const url = await file.getSignedUrl({
+    action: "read",
+    expires: Date.now() + 20 * 60 * 1000,
+  });
   db.collection("request")
     .add({
       user_id: userId,
@@ -66,6 +55,7 @@ const list_create_post = async (req, res) => {
       shop_name_path: req.body.shopNamePath,
       product_price_path: req.body.productPricePath,
       url: req.body.url,
+      thumbnail: url,
       remark: req.body.remark,
       time_stamp: timeStamp,
     })

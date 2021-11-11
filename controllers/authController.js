@@ -81,7 +81,7 @@ const signup_post = async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   //firestore here
-  const user = await db
+  await db
     .collection("users")
     .add({
       email,

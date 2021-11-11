@@ -51,20 +51,29 @@ h2 {
 }
 h3 {
   text-transform: capitalize;
-  margin-bottom: 8px;
+  padding: 10px 0;
 }
 .content {
   margin-left: 20px;
 }
 .blogs a {
   display: block;
-  margin: 40px 0;
-  padding-left: 30px;
-  border-left: 6px solid crimson;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  padding: 0 30px;
+  border-left: 7px solid crimson;
+  background-color: #f1f1f1;
 }
 .blogs a:hover h3 {
   color: crimson;
 }
+.image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+}
+
 .details {
   position: relative;
 }

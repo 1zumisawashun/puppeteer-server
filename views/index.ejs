@@ -8,12 +8,26 @@
       <h2>Scraping Lists</h2>
       <% if (lists.length > 0){ %> <% lists.forEach(list=>{ %>
       <a class="single" href="/lists/<%= list.id %>">
-        <h3 class="title"><%= list.product_name%></h3>
-        <p class="snippet"><%= list.shop_name_path%></p>
-        <p class="snippet"><%= list.product_price_path%></p>
-        <p class="snippet"><%= list.url%></p>
-        <p class="snippet"><%= list.remark%></p>
+        <div class="text">
+          <h3 class="title"><%= list.product_name%></h3>
+          <p class="snippet"><%= list.shop_name_path%></p>
+          <p class="snippet"><%= list.product_price_path%></p>
+          <p class="snippet"><%= list.url%></p>
+          <p class="snippet"><%= list.remark%></p>
+        </div>
+        <div class="thumbnail">
+          <% if (list.thumbnail){ %>
+          <img class="image" src="<%= list.thumbnail%>" alt="" />
+          <% }%> <% if (!list.thumbnail){ %>
+          <img
+            class="image"
+            src="https://placehold.jp/5dab9f/ffffff/150x150.png?text=Not Images"
+            alt=""
+          />
+          <% }%>
+        </div>
       </a>
+
       <% })%> <%}%>
     </div>
     <%- include("./partials/footer.ejs") %>
