@@ -1,4 +1,4 @@
-const { scraping } = require("../middleware/scrapingMiddleware");
+const { productScraping } = require("../middleware/scrapingMiddleware");
 const {
   yodobashi,
   bic,
@@ -11,35 +11,35 @@ const {
 } = require("../datas/meetingowl");
 
 const yodobashiApi = async (req, res) => {
-  const result = await scraping(yodobashi);
+  const result = await productScraping(yodobashi);
   res.json(result);
 };
 const bicApi = async (req, res) => {
-  const result = await scraping(bic);
+  const result = await productScraping(bic);
   res.json(result);
 };
 const yamadaApi = async (req, res) => {
-  const result = await scraping(yamada);
+  const result = await scrproductScrapingping(yamada);
   res.json(result);
 };
 const nojimaApi = async (req, res) => {
-  const result = await scraping(nojima);
+  const result = await productScraping(nojima);
   res.json(result);
 };
 const edionApi = async (req, res) => {
-  const result = await scraping(edion);
+  const result = await productScraping(edion);
   res.json(result);
 };
 const kakakucomApi = async (req, res) => {
-  const result = await scraping(kakakucom);
+  const result = await productScraping(kakakucom);
   res.json(result);
 };
 const rakutenApi = async (req, res) => {
-  const result = await scraping(rakuten);
+  const result = await productScraping(rakuten);
   res.json(result);
 };
 const paypayApi = async (req, res) => {
-  const result = await scraping(paypay);
+  const result = await productScraping(paypay);
   res.json(result);
 };
 

@@ -1,4 +1,4 @@
-const { scraping } = require("./scrapingMiddleware");
+const { productScraping } = require("./scrapingMiddleware");
 const { yamada } = require("../datas/automemo");
 
 const line = require("@line/bot-sdk");
@@ -15,7 +15,7 @@ const handleEvent = async (event) => {
     return null;
   }
   // スクレイピングの結果を取得
-  const result = await scraping(yamada);
+  const result = await productScraping(yamada);
   // 返信用メッセージを作成（タイプに合わせて整形しなくてはいけない）
   await client.replyMessage(event.replyToken, {
     type: "text",
