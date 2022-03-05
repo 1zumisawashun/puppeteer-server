@@ -55,7 +55,7 @@ const login_post = async (req, res) => {
         return res.status(422).json(newErrors);
         //already linked to login.ejs
       }
-      newErrors.email = "inncorect email!";
+      newErrors.email = "inncorect login id";
       return res.status(422).json(newErrors);
     });
 };
