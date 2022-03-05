@@ -7,6 +7,7 @@
     <div class="details content">
       <h2><%= list.product_name%></h2>
       <div class="content">
+        <p class="timestamp"><%= formatDateTime(list.time_stamp)%></p>
         <p><%= list.shop_name_path%></p>
         <p><%= list.product_price_path%></p>
         <p><%= list.url%></p>
@@ -17,17 +18,17 @@
     </div>
     <%- include("./partials/footer.ejs") %>
     <script>
-      const trashcan = document.querySelector("a.delete");
-      trashcan.addEventListener("click", (e) => {
+      const trashcan = document.querySelector('a.delete');
+      trashcan.addEventListener('click', (e) => {
         const endpoint = `/lists/${trashcan.dataset.doc}`;
         fetch(endpoint, {
-          method: "DELETE",
+          method: 'DELETE',
         })
           .then((response) => response.json())
           .then(
             (data) => (
               (window.location.href = data.redirect), console.log(data)
-            )
+            ),
           )
           .catch((error) => console.log(error));
       });
