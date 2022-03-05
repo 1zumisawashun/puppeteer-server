@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer-core");
 const executablePath =
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-const scraping = async (shop) => {
+const productScraping = async (shop) => {
   const browser = await puppeteer.launch({
     executablePath: executablePath,
     // slowMo: 50,
@@ -13,6 +13,16 @@ const scraping = async (shop) => {
   await page.goto(shop.url, {
     waitUntil: "networkidle2",
   });
+
+  // NOTE:IDのみ持つARRAYを生成する
+  let generateArray = await page.evaluate((selector) => {
+    const list = Array.from(document.querySelectorAll(selector));
+    return list.map((_, index) => {
+      return { id: index };
+    });
+  }, shop.namePath);
+  // FIXME:1回のスクレイピングで処理できないか調査をする
+  // NOTE:複数取得はあくまで要素のみ（aタグ・href属性・textContentなど）
 
   // NOTE:商品価格のスクレイピング
   const priceDatas = await page.evaluate((selector) => {
@@ -36,24 +46,44 @@ const scraping = async (shop) => {
     });
   }, shop.namePath);
 
+  // NOTE:商品名のスクレイピング
+  const linkDatas = await page.evaluate((selector) => {
+    const list = Array.from(document.querySelectorAll(selector));
+    return list.map((data, index) => {
+      return {
+        id: index,
+        link: data.href,
+      };
+    });
+  }, shop.linkPath);
+
   // NOTE:プロパティアクセスできるように加工する
-  const formatNameDatas = nameDatas.reduce(
-    (accumulator, currentValue, index) => {
+  const formatDatas = (array) => {
+    return array.reduce((accumulator, currentValue, index) => {
       accumulator[index] = currentValue;
       return accumulator;
-    },
-    {}
-  );
+    }, {});
+  };
+  const formatPriceDatas = formatDatas(priceDatas);
+  const formatNameDatas = formatDatas(nameDatas);
+  const formatLinkDatas = formatDatas(linkDatas);
 
   // NOTE:一致するオブジェクトをマージさせる
-  const result = priceDatas.map((el) => {
-    return formatNameDatas[el.id]
-      ? { ...formatNameDatas[el.id], price: el.price }
-      : "データが取得できませんでした";
-  });
+  const mergeDatas = (array) => {
+    generateArray = generateArray.map((el) => {
+      return { ...array[el.id], ...el } ?? el;
+    });
+  };
+  mergeDatas(formatPriceDatas);
+  mergeDatas(formatNameDatas);
+  mergeDatas(formatLinkDatas);
 
   await browser.close();
-  return result;
+  return generateArray;
 };
 
-module.exports = { scraping };
+const testScraping = async () => {
+  console.log("test");
+};
+
+module.exports = { productScraping, testScraping };
