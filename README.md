@@ -1,12 +1,25 @@
-# puppeteer-backend
+# Express × Puppeteer × Firebase
 
 ```
 サーバー：Express
-トークン：JWT
+トークン：JsonWebToken
 スクレイピング：Puppeteer-core
-データベース：Firestore
-ストレージ：Google Cloud Storage
+DB：Firestore
+ストレージ：Cloud Storage
 フロント：Ejs
+```
+
+## 課題
+
+```
+フロントの強化
+スクレイピングの繋ぎ込み
+スクレイピング中のローディング
+スクレイピング結果の表示
+結果の CSV 出力
+デプロイ
+デプロイできたらスクレイピングの定期実行
+TypeScript を入れる
 ```
 
 ## Project setup
