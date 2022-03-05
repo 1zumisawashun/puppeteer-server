@@ -8,7 +8,7 @@
     "sourceType": "module"
   },
   "plugins": ["prettier"],
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "extends": ["plugin:prettier/recommended"],
   "rules": {
     "no-console": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
