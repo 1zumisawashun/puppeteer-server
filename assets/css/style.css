@@ -74,11 +74,11 @@ h3 {
   justify-content: space-between;
   margin: 30px 0;
   padding: 15px 30px;
-  border-left: 7px solid crimson;
+  border-left: 7px solid #DC143C;
   background-color: #f1f1f1;
 }
 .blogs a:hover h3 {
-  color: crimson;
+  color: #DC143C;
 }
 .thumbnail {
   width: 130px;
@@ -125,7 +125,7 @@ textarea {
 }
 .create-blog button {
   margin-top: 20px;
-  background: crimson;
+  background:#DC143C;
   color: white;
   padding: 6px;
   border: 0;
