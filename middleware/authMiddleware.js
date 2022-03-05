@@ -8,11 +8,9 @@ const requestAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, "net ninja secret", (err, decodedToken) => {
       if (err) {
-        console.log(err.message);
         res.redirect("/login");
       } else {
-        console.log("jwtがあるのでログインを許可します。");
-        console.log(decodedToken);
+        console.log("JWT VERIFY", decodedToken);
         next();
       }
     });
@@ -28,7 +26,6 @@ const checkUser = (req, res, next) => {
   if (token) {
     jwt.verify(token, "net ninja secret", async (err, decodedToken) => {
       if (err) {
-        console.log(err.message);
         res.locals.user = null;
         next();
       } else {
@@ -53,13 +50,11 @@ const checkUser = (req, res, next) => {
 
 const getUserId = (token) => {
   if (!token) return null;
-  console.log(token, "token on middleware");
   return jwt.verify(token, "net ninja secret", async (err, decodedToken) => {
     if (err) {
-      console.log(err.message);
       return;
     } else {
-      console.log(decodedToken.id, "decodedToken.id on middleware");
+      console.log("USER ID", decodedToken.id);
       return decodedToken.id;
     }
   });

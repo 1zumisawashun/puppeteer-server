@@ -28,6 +28,7 @@ const kakakucom = {
   url: "https://kakaku.com/item/K0001262742/?lid=pc_ksearch_kakakuitem",
   pricePath: "div .p-PTPrice_price",
   namePath: "p .p-PTShopData_name_link",
+  linkPath: ".p-PTShop_btn a",
 };
 const rakuten = {
   url:

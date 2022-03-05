@@ -3,53 +3,50 @@ const db = admin.firestore();
 const bucket = admin.storage().bucket();
 const { getUserId } = require("../middleware/authMiddleware");
 
-const list_index = (req, res) => {
-  db.collection("request")
-    .get()
-    .then((querySnapshot) => {
-      const lists = [];
-      querySnapshot.forEach((doc) => {
-        lists.push({ id: doc.id, ...doc.data() });
-      });
-      res.render("index", { title: "All Lists", lists: lists });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).render("404", { title: "List not Found" });
+const list_index = async (req, res) => {
+  try {
+    const querySnapshot = await db.collection("request").get();
+    const lists = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
+    res.render("index", { title: "All Lists", lists });
+  } catch (error) {
+    res.status(404).render("404", { title: "List not Found" });
+  }
 };
 
-const list_detail = (req, res) => {
-  db.collection("request")
-    .doc(req.params.id)
-    .get()
-    .then((docSnapshot) => {
-      const list = [];
-      list.push({ id: docSnapshot.id, ...docSnapshot.data() });
-      res.render("detail", { title: "Detail List", list: list[0] });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).render("404", { title: "List not Found" });
+const list_detail = async (req, res) => {
+  try {
+    const docSnapshot = await db.collection("request").doc(req.params.id).get();
+    res.render("detail", {
+      title: "Detail List",
+      list: { id: docSnapshot.id, ...docSnapshot.data() },
     });
+  } catch (error) {
+    res.status(404).render("404", { title: "List not Found" });
+  }
 };
 
 const list_create_get = (req, res) => {
   res.render("create", { title: "Create a new List" });
 };
 
-const list_create_post = async (req, res) => {
-  const token = req.cookies.jwt;
-  const userId = await getUserId(token);
-  const timeStamp = admin.firestore.FieldValue.serverTimestamp();
+const getUrl = async (req, userId) => {
   const file = bucket.file(`thumbnail/${userId}/${req.file.originalname}`);
   await file.save(req.file.buffer);
   const url = await file.getSignedUrl({
     action: "read",
-    expires: Date.now() + 20 * 60 * 1000,
+    expires: Date.now() + 24 * 60 * 60 * 365, // NOTE:1年に設定する
   });
-  db.collection("request")
-    .add({
+  return url;
+};
+
+const list_create_post = async (req, res) => {
+  const userId = await getUserId(req.cookies.jwt);
+  const url = await getUrl(req, userId);
+  const timeStamp = admin.firestore.FieldValue.serverTimestamp();
+  try {
+    const params = {
       user_id: userId,
       product_name: req.body.productName,
       shop_name_path: req.body.shopNamePath,
@@ -57,29 +54,27 @@ const list_create_post = async (req, res) => {
       url: req.body.url,
       thumbnail: url,
       remark: req.body.remark,
-      time_stamp: timeStamp,
-    })
-    .then((result) => {
-      res.redirect("/Lists");
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).render("404", { title: "List not Found" });
-    });
+      timestamp: timeStamp,
+    };
+    const result = await db.collection("request").add(params);
+    if (result) {
+      res.redirect("/lists");
+    }
+  } catch (error) {
+    res.status(404).render("404", { title: "List not Found" });
+  }
 };
 
-const list_delete = (req, res) => {
-  const id = req.params.id;
-  db.collection("request")
-    .doc(id)
-    .delete()
-    .then((result) => {
+const list_delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await db.collection("request").doc(id).delete();
+    if (result) {
       res.json({ redirect: "/lists" });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).render("404", { title: "List not Found" });
-    });
+    }
+  } catch (error) {
+    res.status(404).render("404", { title: "List not Found" });
+  }
 };
 
 module.exports = {
