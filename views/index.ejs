@@ -10,10 +10,18 @@
       <a class="single" href="/lists/<%= list.id %>">
         <div class="text">
           <h3 class="title"><%= list.product_name%></h3>
-          <p class="snippet"><%= list.shop_name_path%></p>
-          <p class="snippet"><%= list.product_price_path%></p>
-          <p class="snippet"><%= list.url%></p>
-          <p class="snippet"><%= list.remark%></p>
+          <p class="snippet">
+            <b>shop_name_path:</b>
+            <%= list.shop_name_path%>
+          </p>
+          <p class="snippet">
+            <b>product_price_path:</b>
+            <%= list.product_price_path%>
+          </p>
+          <p class="snippet">
+            <b>url:</b>
+            <%= list.url%>
+          </p>
         </div>
         <div class="thumbnail">
           <% if (list.thumbnail){ %>
