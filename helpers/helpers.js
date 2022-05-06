@@ -7,7 +7,8 @@ const testFunction = (data) => {
 };
 
 const formatDateTime = (timestamp) => {
-  const result = formatDistanceToNow(timestamp.toDate(), {
+  if (!timestamp) return new Date();
+  const result = formatDistanceToNow(timestamp?.toDate(), {
     addSuffix: true,
     locale: ja,
   });

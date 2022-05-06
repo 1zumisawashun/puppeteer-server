@@ -1,5 +1,11 @@
 # Express × Puppeteer × Firebase
 
+## TOP ページ
+
+![image](https://user-images.githubusercontent.com/65071534/167084504-80e4a1de-b8c2-45dd-a929-76d160e08d79.png)
+
+## 採用した技術
+
 ```
 サーバー：Express
 トークン：JsonWebToken
@@ -7,19 +13,6 @@
 DB：Firestore
 ストレージ：Cloud Storage
 フロント：Ejs
-```
-
-## 課題
-
-```
-フロントの強化
-スクレイピングの繋ぎ込み
-スクレイピング中のローディング
-スクレイピング結果の表示
-結果の CSV 出力
-デプロイ
-デプロイできたらスクレイピングの定期実行
-TypeScript を入れる
 ```
 
 ## Project setup
