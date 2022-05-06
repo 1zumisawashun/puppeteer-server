@@ -9,14 +9,12 @@ const listRoutes = require('./routes/listRoutes');
 const authRoutes = require('./routes/authRoutes');
 const automemoRoutes = require('./routes/automemoRoutes');
 const meetingowlRoutes = require('./routes/meetingowlRoutes');
-const lineRoutes = require('./routes/lineRoutes');
+
 const { requestAuth, checkUser } = require('./middleware/authMiddleware');
 
 app.locals = require('./helpers/helpers');
 app.set('view engine', 'ejs');
 
-app.use(lineRoutes);
-// app.use("/liff", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
@@ -30,7 +28,7 @@ app.use(authRoutes);
 app.use('/api/automemo', automemoRoutes);
 app.use('/api/meetingowl', meetingowlRoutes);
 
-var server = app.listen(3000, function () {
+var server = app.listen(8080, function () {
   console.log('Node.js is listening to PORT:' + server.address().port);
 });
 

@@ -1,3 +1,4 @@
+// NOTE:MIXINに近い？
 const formatDistanceToNow = require('date-fns/formatDistanceToNow');
 const ja = require('date-fns/locale/ja');
 
