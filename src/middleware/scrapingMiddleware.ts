@@ -1,8 +1,8 @@
-const puppeteer = require("puppeteer-core");
+import puppeteer from 'puppeteer-core';
 const executablePath =
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
-const productScraping = async (shop) => {
+export const productScraping = async (shop: any) => {
   const browser = await puppeteer.launch({
     executablePath: executablePath,
     // slowMo: 50,
@@ -11,7 +11,7 @@ const productScraping = async (shop) => {
   const page = await browser.newPage();
   await page.setDefaultNavigationTimeout(0);
   await page.goto(shop.url, {
-    waitUntil: "networkidle2",
+    waitUntil: 'networkidle2',
   });
 
   // NOTE:IDのみ持つARRAYを生成する
@@ -58,7 +58,7 @@ const productScraping = async (shop) => {
   }, shop.linkPath);
 
   // NOTE:プロパティアクセスできるように加工する
-  const formatDatas = (array) => {
+  const formatDatas = (array: any[]) => {
     return array.reduce((accumulator, currentValue, index) => {
       accumulator[index] = currentValue;
       return accumulator;
@@ -69,7 +69,7 @@ const productScraping = async (shop) => {
   const formatLinkDatas = formatDatas(linkDatas);
 
   // NOTE:一致するオブジェクトをマージさせる
-  const mergeDatas = (array) => {
+  const mergeDatas = (array: any[]) => {
     generateArray = generateArray.map((el) => {
       return { ...array[el.id], ...el } ?? el;
     });
@@ -82,8 +82,6 @@ const productScraping = async (shop) => {
   return generateArray;
 };
 
-const testScraping = async () => {
-  console.log("test");
+export const testScraping = async () => {
+  console.log('test');
 };
-
-module.exports = { productScraping, testScraping };

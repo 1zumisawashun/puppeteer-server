@@ -2,11 +2,11 @@
 const formatDistanceToNow = require('date-fns/formatDistanceToNow');
 const ja = require('date-fns/locale/ja');
 
-const testFunction = (data) => {
+export const testFunction = (data: string) => {
   return 'hello ' + data;
 };
 
-const formatDateTime = (timestamp) => {
+export const formatDateTime = (timestamp: any) => {
   if (!timestamp) return new Date();
   const result = formatDistanceToNow(timestamp?.toDate(), {
     addSuffix: true,
@@ -14,5 +14,3 @@ const formatDateTime = (timestamp) => {
   });
   return result;
 };
-
-module.exports = { testFunction, formatDateTime };
