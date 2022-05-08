@@ -28,7 +28,7 @@ app.use(authRoutes);
 app.use('/api/automemo', automemoRoutes);
 app.use('/api/meetingowl', meetingowlRoutes);
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
 
 app.get('*', checkUser);
 app.get('/', requestAuth, (req: Request, res: Response, next: NextFunction) => {
@@ -49,3 +49,5 @@ app.get('/read-cookies', (req: Request, res: Response, next: NextFunction) => {
   const cookies = req.cookies;
   res.json(cookies);
 });
+
+export default app; // NOTE:vercelのセットアップ

@@ -14,6 +14,7 @@
 DB：Firestore
 ストレージ：Cloud Storage
 フロント：EJS
+ホスティング：Vercel
 ```
 
 ## 直面している課題
