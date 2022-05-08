@@ -2,12 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/app.ts",
   "scripts": {
     "dev": "tsc-watch --onSuccess \"npm start\"",
     "start": "nodemon dist/app.js",
-    "build": "tsc",
-    "deploy": "npm run build && vercel --prod",
+    "deploy": "vercel --prod",
+    "copy-assets": "ts-node tools/copyAssets.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -39,6 +39,7 @@
     "@types/morgan": "^1.9.3",
     "@types/multer": "^1.4.7",
     "@types/node": "^17.0.31",
+    "@types/shelljs": "^0.8.11",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -46,6 +47,9 @@
     "lint-staged": "^12.3.4",
     "nodemon": "^2.0.16",
     "prettier": "2.5.1",
+    "shelljs": "^0.8.5",
+    "ts-node": "^10.7.0",
+    "ts-node-dev": "^1.1.8",
     "tsc-watch": "^5.0.3"
   }
 }

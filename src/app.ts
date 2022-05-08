@@ -13,9 +13,9 @@ import { requestAuth, checkUser } from './middleware/authMiddleware';
 import * as helpers from './helpers/helpers';
 
 app.locals = helpers;
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
 app.use(express.json());
@@ -28,7 +28,8 @@ app.use(authRoutes);
 app.use('/api/automemo', automemoRoutes);
 app.use('/api/meetingowl', meetingowlRoutes);
 
-app.listen(process.env.PORT || 8080);
+app.listen(3000);
+console.log('これはテスト');
 
 app.get('*', checkUser);
 app.get('/', requestAuth, (req: Request, res: Response, next: NextFunction) => {
