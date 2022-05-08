@@ -29,7 +29,6 @@ app.use('/api/automemo', automemoRoutes);
 app.use('/api/meetingowl', meetingowlRoutes);
 
 app.listen(3000);
-console.log('これはテスト');
 
 app.get('*', checkUser);
 app.get('/', requestAuth, (req: Request, res: Response, next: NextFunction) => {
@@ -50,5 +49,3 @@ app.get('/read-cookies', (req: Request, res: Response, next: NextFunction) => {
   const cookies = req.cookies;
   res.json(cookies);
 });
-
-export default app; // NOTE:vercelのセットアップ

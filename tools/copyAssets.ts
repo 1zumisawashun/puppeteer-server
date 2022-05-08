@@ -1,4 +1,4 @@
 import shell from 'shelljs';
 
-shell.cp('-R', 'src/views', 'dist');
-shell.cp('-R', 'src/public', 'dist');
+shell.cp('-R', 'src/views', 'build');
+shell.cp('-R', 'src/public', 'build');

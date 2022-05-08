@@ -4,11 +4,14 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"npm start\"",
-    "start": "nodemon dist/app.js",
-    "deploy": "vercel --prod",
-    "copy-assets": "ts-node tools/copyAssets.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/app.js",
+    "start:tsc-watch": "nodemon dist/app.js",
+    "dev": "ts-node-dev --respawn src/app.ts",
+    "dev:tsc-watch": "tsc-watch --onSuccess \"npm start\"",
+    "build": "npm run clean && tsc && npm run copy-assets",
+    "copy-assets": "ts-node tools/copyAssets",
+    "clean": "rimraf build",
+    "deploy": "vercel --prod"
   },
   "author": "",
   "license": "ISC",
@@ -47,9 +50,11 @@
     "lint-staged": "^12.3.4",
     "nodemon": "^2.0.16",
     "prettier": "2.5.1",
+    "rimraf": "^3.0.2",
     "shelljs": "^0.8.5",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
-    "tsc-watch": "^5.0.3"
+    "tsc-watch": "^5.0.3",
+    "typescript": "^4.6.4"
   }
 }
