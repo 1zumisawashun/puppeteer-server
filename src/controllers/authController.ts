@@ -3,16 +3,23 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { check, validationResult, ValidationError } from 'express-validator';
 import { projectFiresore } from '../plugins/firebase';
+import dotenv from 'dotenv';
+dotenv.config();
 
 interface NewErrors {
   password?: string;
   email?: string;
 }
 
+interface User {
+  email: string;
+  hashPassword: string;
+}
+
 // create token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id: any) => {
-  return jwt.sign({ id }, 'net ninja secret', {
+  return jwt.sign({ id }, process.env.JWT_PRIVATE_KEY!, {
     expiresIn: maxAge,
   });
 };
@@ -24,51 +31,42 @@ export const login_get: RequestHandler = async (req, res, next) => {
   res.render('login', { title: 'login' });
 };
 export const logout_get: RequestHandler = async (req, res, next) => {
-  res.cookie('jwt', '', { maxAge: 1 });
-  //expire quickly because maxAge is 1
+  res.cookie('jwt', '', { maxAge: 1 }); // expire quickly because maxAge is 1
   res.redirect('/');
 };
 
 export const login_post: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body;
-  await projectFiresore
+  // NOTE:Firestore
+  const querySnapshot = await projectFiresore
     .collection('users')
     .where('email', '==', email)
-    .get()
-    .then((docSnapshot) => {
-      const user: Array<any> = [];
-      docSnapshot.forEach((doc) => {
-        user.push({ id: doc.id, ...doc.data() });
-      });
-      return user[0];
-    })
-    .then(async (user) => {
-      console.log(user);
-      const newErrors: NewErrors = {};
-      if (user) {
-        const auth = await bcrypt.compare(password, user.hashPassword);
-        if (auth) {
-          console.log(auth, 'authはあります！');
-          const token = await createToken(user.id);
-          res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1800 });
-          return res.status(201).json({ user: user.id });
-          //pass with data to login.ejs
-        }
-        newErrors.password = 'inncorect password!';
-        return res.status(422).json(newErrors);
-        //already linked to login.ejs
-      }
-      newErrors.email = 'inncorect login id';
-      return res.status(422).json(newErrors);
-    });
+    .get();
+  const result = querySnapshot.docs.map((doc) => {
+    return { id: doc.id, ...(doc.data() as User) };
+  });
+  const user = result[0];
+  // NOTE:Validation
+  const newErrors: NewErrors = {};
+  if (user) {
+    const auth = await bcrypt.compare(password, user.hashPassword);
+    if (auth) {
+      const token = createToken(user.id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1800 });
+      return res.status(201).json({ user: user.id });
+    }
+    newErrors.password = 'inncorect password!';
+    return res.status(422).json(newErrors);
+  }
+  newErrors.email = 'inncorect login id';
+  return res.status(422).json(newErrors);
 };
 
 export const signup_post: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body;
-  //validation here
   const result = validationResult(req);
+  // NOTE:Validation
   if (!result.isEmpty()) {
-    // failed!
     const newErrors: NewErrors = {};
     result.array().forEach((err: ValidationError) => {
       if (err.param.includes('email')) {
@@ -78,22 +76,16 @@ export const signup_post: RequestHandler = async (req, res, next) => {
       }
     });
     return res.status(422).json(newErrors);
-    //this data send to signup.ejs and possible to get res.json()
   }
-  //bcript here
+  // NOTE:Bcript
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
-  //firestore here
-  await projectFiresore
-    .collection('users')
-    .add({
-      email,
-      hashPassword,
-    })
-    .then(async (result) => {
-      const token = await createToken(result.id);
-      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1800 });
-      res.status(201).json({ user: result.id });
-      //this data send to signup.ejs and possible to get res.json()
-    });
+  // NOTE:Firestore
+  const userDocRef = await projectFiresore.collection('users').add({
+    email,
+    hashPassword,
+  });
+  const token = createToken(userDocRef.id);
+  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1800 });
+  res.status(201).json({ user: userDocRef.id });
 };

@@ -1,12 +1,27 @@
-import { RequestHandler } from 'express';
-import { projectFiresore, projectStorage, admin } from '../plugins/firebase';
+import { RequestHandler, Request } from 'express';
+import {
+  projectFiresore,
+  projectStorage,
+  serverTimestamp,
+} from '../plugins/firebase';
 import { getUserId } from '../middleware/authMiddleware';
+
+interface Req {
+  user_id: string;
+  product_name: string;
+  shop_name_path: string;
+  product_price_path: string;
+  url: string;
+  thumbnail: Array<string>;
+  remark: string;
+  timestamp: typeof serverTimestamp;
+}
 
 export const list_index: RequestHandler = async (req, res, next) => {
   try {
     const querySnapshot = await projectFiresore.collection('request').get();
-    const lists = querySnapshot.docs.map((doc: any) => {
-      return { id: doc.id, ...doc.data() };
+    const lists = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...(doc.data() as Req) };
     });
     res.render('index', { title: 'All Lists', lists });
   } catch (error) {
@@ -22,7 +37,7 @@ export const list_detail: RequestHandler = async (req, res, next) => {
       .get();
     res.render('detail', {
       title: 'Detail List',
-      list: { id: docSnapshot.id, ...docSnapshot.data() },
+      list: { id: docSnapshot.id, ...(docSnapshot.data() as Req) },
     });
   } catch (error) {
     res.status(404).render('404', { title: 'List not Found' });
@@ -33,11 +48,13 @@ export const list_create_get: RequestHandler = async (req, res, next) => {
   res.render('create', { title: 'Create a new List' });
 };
 
-export const getUrl = async (req: any, userId: any) => {
+export const getUrl = async (req: Request, userId: string) => {
   const file = projectStorage
     .bucket()
-    .file(`thumbnail/${userId}/${req.file.originalname}`);
-  await file.save(req.file.buffer);
+    .file(
+      `thumbnail/${userId}/${(req.file as Express.Multer.File).originalname}`,
+    );
+  await file.save((req.file as Express.Multer.File).buffer);
   const url = await file.getSignedUrl({
     action: 'read',
     expires: Date.now() + 24 * 60 * 60 * 365, // NOTE:1年に設定する
@@ -57,7 +74,7 @@ export const list_create_post: RequestHandler = async (req, res, next) => {
       url: req.body.url,
       thumbnail: url,
       remark: req.body.remark,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      timestamp: serverTimestamp,
     };
     const result = await projectFiresore.collection('request').add(params);
     if (result) {

@@ -12,5 +12,7 @@ if (admin.apps.length === 0) {
 
 const projectFiresore = admin.firestore();
 const projectStorage = admin.storage();
+const documentId = admin.firestore.FieldPath.documentId();
+const serverTimestamp = admin.firestore.FieldValue.serverTimestamp();
 
-export { projectFiresore, projectStorage, admin };
+export { projectFiresore, projectStorage, documentId, serverTimestamp, admin };
