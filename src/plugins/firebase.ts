@@ -15,4 +15,4 @@ const projectStorage = admin.storage();
 const documentId = admin.firestore.FieldPath.documentId();
 const serverTimestamp = admin.firestore.FieldValue.serverTimestamp();
 
-export { projectFiresore, projectStorage, documentId, serverTimestamp, admin };
+export { projectFiresore, projectStorage, documentId, serverTimestamp };
