@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
@@ -28,14 +29,19 @@ app.use(authRoutes);
 app.use('/api/automemo', automemoRoutes);
 app.use('/api/meetingowl', meetingowlRoutes);
 
-app.listen(3000);
+app.listen(PORT, () =>
+  console.log(`server running in http://localhost:${PORT}`),
+);
 
-app.get('*', checkUser);
+// app.get('*', checkUser);
 app.get('/', requestAuth, (req: Request, res: Response, next: NextFunction) => {
   res.redirect('/lists');
 });
 app.get('/about', (req: Request, res: Response, next: NextFunction) => {
   res.render('about', { title: 'About' });
+});
+app.get('/test', (req: Request, res: Response, next: NextFunction) => {
+  res.json({ test: 'test' });
 });
 app.get('/set-cookies', (req: Request, res: Response, next: NextFunction) => {
   res.cookie('newUser', false);
