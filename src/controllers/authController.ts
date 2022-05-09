@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { check, validationResult, ValidationError } from 'express-validator';
 import { projectFiresore } from '../plugins/firebase';
